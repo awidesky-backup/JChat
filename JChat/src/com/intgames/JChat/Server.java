@@ -5,13 +5,16 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+
+import com.intgames.JChat.runnables.ServerAccepter;
 
 public class Server {
 
 	private ServerSocket server;
 	private Socket client;
 	private BufferedReader br;
-	private PrintWriter pw;
+	private static ArrayList<PrintWriter> pw = new ArrayList<>();
 	
 	public void setnetwork(int port) {
 		
@@ -21,19 +24,14 @@ public class Server {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		new Thread(() ->  {
-			
-			try {
-				client = server.accept();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
-			
-		}).start();
 		
+		new Thread(new ServerAccepter(server));
+		
+	}
+
+	public static void putPrintWriter(PrintWriter pw2) {
+		// TODO Auto-generated method stub
+		pw.add(pw2);
 		
 	}
 	
