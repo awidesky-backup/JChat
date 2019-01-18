@@ -18,11 +18,11 @@ public class ServerAccepter implements Runnable {
 	private Server svr;
 	private MainGUI mg;
 	
-	public ServerAccepter(ServerSocket server, Server svr, MainGUI mg) {
+	public ServerAccepter(ServerSocket server, Server svr) {
 		// TODO Auto-generated constructor stub
 		this.sock = server;
 		this.svr = svr;
-		this.mg = mg;
+		this.mg = svr.mg;
 	}
 
 	@Override
@@ -34,9 +34,10 @@ public class ServerAccepter implements Runnable {
 				BufferedReader br = null;
 				
 				try {
+					
 					sc = sock.accept();
 					
-				} catch (IOException e1) {
+				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					mg.error("클라이언트 연결 오류!", "클라이언트와 연결하지 못했습니다.");
 				}
@@ -45,7 +46,7 @@ public class ServerAccepter implements Runnable {
 				try {
 				
 				bw = new BufferedWriter(new OutputStreamWriter(sc.getOutputStream()));
-				svr.putPrintWriter(bw);
+				svr.putBufferedWriter(bw);
 				
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

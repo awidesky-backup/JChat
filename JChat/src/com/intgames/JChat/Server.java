@@ -21,7 +21,7 @@ public class Server {
 	
 	public Server(String servername) {
 		this.servername = servername;
-		mg = new MainGUI();
+		mg = new MainGUI(this.log);
 	}
 
 	public void setnetwork(int port) {
@@ -35,11 +35,11 @@ public class Server {
 			mg.error("ServerSocket 생성 실패!", "ServerSocket 생성에 실패했습니다!");
 		}
 		
-		new Thread(new ServerAccepter(server, this, mg)).start();
+		new Thread(new ServerAccepter(server, this)).start();
 		
 	}
 
-	public void putPrintWriter(BufferedWriter bw) {
+	public void putBufferedWriter(BufferedWriter bw) {
 		// TODO Auto-generated method stub
 		this.bw.add(bw);
 		
@@ -55,7 +55,11 @@ public class Server {
 			
 			try {
 				BufferedWriter br = it.next();
-				br.write(msg + "\n");
+				br.write(who);
+				br.newLine();
+				br.flush();
+				br.write(msg);
+				br.newLine();
 				br.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

@@ -14,7 +14,7 @@ public class Client  {
 	
 	public Client() {
 		
-		mg = new MainGUI();
+		mg = new MainGUI(this);
 		
 	}
 	

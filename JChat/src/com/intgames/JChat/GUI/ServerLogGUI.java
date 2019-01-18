@@ -74,7 +74,7 @@ public class ServerLogGUI extends JFrame {
 			
 		} catch (IOException e) {
 			
-			server.mg.error("로그 파일 제작 실패!", "로그 파일을 제작하는 데 실패했습니다!");
+			server.mg.error("로그 파일 제작 중 오류", "로그 파일에 적어넣는 도중 실패했습니다!");
 			
 		}
 	}
