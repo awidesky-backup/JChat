@@ -8,6 +8,13 @@ import com.intgames.JChat.Client;
 @SuppressWarnings("serial")
 public class MainGUI extends JFrame {
 
+	/**
+	 * @author Eugene Hong
+	 * 
+	 * this class manage log   
+	 * 
+	 * */
+	
 	ServerLogGUI log;
 	
 	public MainGUI(ServerLogGUI log) {

@@ -29,7 +29,7 @@ public class ServerAccepter implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 			while (true) {
-				
+				//              ∆Æ∑ª¿Ëº« √≥∏Æ!!!!!!!!
 				Socket sc = null;
 				BufferedReader br = null;
 				

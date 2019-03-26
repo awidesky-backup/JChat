@@ -12,6 +12,15 @@ import com.intgames.JChat.runnables.ServerAccepter;
 
 public class Server {
 
+	
+	/**
+	 * @author Eugene Hong
+	 * 
+	 * 
+	 * 
+	 */
+	
+	
 	private String servername;
 	private ServerSocket server;
 	private ArrayList<BufferedWriter> bw = new ArrayList<>();
@@ -21,7 +30,12 @@ public class Server {
 	
 	public Server(String servername) {
 		this.servername = servername;
-		mg = new MainGUI(this.log);
+		mg = new MainGUI(this.log); 
+		/* 
+	 	Since different server instance uses different ServerLogGUI instance,
+	 	give ServerLogGUI instance of server to 
+		*/
+		 
 	}
 
 	public void setnetwork(int port) {
