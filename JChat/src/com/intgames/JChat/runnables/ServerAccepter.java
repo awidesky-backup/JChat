@@ -29,7 +29,7 @@ public class ServerAccepter implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 			while (true) {
-				//              트렌잭션 처리!!!!!!!!
+				
 				Socket sc = null;
 				BufferedReader br = null;
 				
@@ -40,6 +40,7 @@ public class ServerAccepter implements Runnable {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					mg.error("클라이언트 연결 오류!", "클라이언트와 연결하지 못했습니다.");
+					continue;
 				}
 				
 				
@@ -51,6 +52,7 @@ public class ServerAccepter implements Runnable {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					mg.error("클라이언트 연결 오류!", "클라이언트의 OutputStream을 가져오는 데 실패했습니다.");
+					continue;
 				}
 
 				
@@ -59,6 +61,7 @@ public class ServerAccepter implements Runnable {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					mg.error("클라이언트 연결 오류!", "클라이언트의 InputStream을 가져오는 데 실패했습니다.");
+					continue;
 				}
 				
 				new Thread(new MessageGetter(br, this.svr)).start();
