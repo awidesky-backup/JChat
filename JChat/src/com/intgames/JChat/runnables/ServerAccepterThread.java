@@ -7,19 +7,22 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 import com.intgames.JChat.Server;
 import com.intgames.JChat.GUI.MainGUI;
 
-public class ServerAccepter implements Runnable {
+public class ServerAccepterThread extends Thread {
 
 	private ServerSocket sock;
 	private BufferedWriter bw;
 	private Server svr;
 	private MainGUI mg;
+	private LinkedList<MessageGetterThread> msggetter = new LinkedList<>();
 	private boolean isrunning;
 	
-	public ServerAccepter(ServerSocket server, Server svr) {
+	public ServerAccepterThread(ServerSocket server, Server svr) {
 		// TODO Auto-generated constructor stub
 		this.sock = server;
 		this.svr = svr;
@@ -27,11 +30,6 @@ public class ServerAccepter implements Runnable {
 		this.isrunning = true;
 	}
 
-	public void setisrunning(boolean isrunning) {
-		
-		this.isrunning = isrunning;
-		
-	}
 	
 	@Override
 	public void run() {
@@ -50,11 +48,27 @@ public class ServerAccepter implements Runnable {
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					mg.error("클라이언트 연결 오류!", e.getMessage());
+					mg.error("클라이언트 연결 오류!", "클라이언트와 연결하는 도중 문제가 발생했습니다!\n" + e.getMessage());
 					continue;
 				}
 				
-				new Thread(new MessageGetter(br, this.svr)).start();
+				MessageGetterThread th = new MessageGetterThread(br, this.svr);
+				this.msggetter.add(th);
+				th.start();
+				
+		}
+	}
+	
+	
+	public void kill() {
+		
+		this.isrunning = false;
+		Iterator<MessageGetterThread> it = this.msggetter.iterator();
+		
+		while(it.hasNext()) {
+			
+			it.next().kill();
+			
 		}
 	}
 

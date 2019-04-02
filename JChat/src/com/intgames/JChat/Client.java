@@ -24,10 +24,10 @@ public class Client  {
 			try {
 				sock = new Socket(ip, port);
 			} catch (UnknownHostException e) {
-				mg.error("UnknownHostException","호스트를 알 수 없습니다!");
+				mg.error("UnknownHostException","호스트를 알 수 없습니다!\n" + e.getMessage());
 			
 			} catch (IOException e) {
-				mg.error("IOException","서버와의 통신을 위해 소켓을 생성하는 도중 문제가 발생했습니다!");
+				mg.error("IOException","서버와의 통신을 위해 소켓을 생성하는 도중 문제가 발생했습니다!\n" + e.getMessage());
 			}
 			
 //			try {

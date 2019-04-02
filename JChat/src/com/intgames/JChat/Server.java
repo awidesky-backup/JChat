@@ -8,7 +8,7 @@ import java.util.Iterator;
 
 import com.intgames.JChat.GUI.MainGUI;
 import com.intgames.JChat.GUI.ServerLogGUI;
-import com.intgames.JChat.runnables.ServerAccepter;
+import com.intgames.JChat.runnables.ServerAccepterThread;
 
 public class Server {
 
@@ -23,15 +23,14 @@ public class Server {
 	
 	private String servername;
 	private ServerSocket server;
+	private ServerAccepterThread sa;
 	private ArrayList<BufferedWriter> bw = new ArrayList<>();
 	private ServerLogGUI log;
-	private boolean isruninng;
 	
 	public MainGUI mg;
 	
 	public Server(String servername) {
 		this.servername = servername;
-		this.isruninng = true;
 		this.log = new ServerLogGUI(this.servername, this);
 		mg = new MainGUI(this.log); 
 		/* 
@@ -49,18 +48,14 @@ public class Server {
 			server = new ServerSocket(port);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			mg.error("ServerSocket 생성 실패!", "ServerSocket 생성에 실패했습니다!");
+			mg.error("ServerSocket 생성 실패!", "ServerSocket 생성에 실패했습니다!\n" + e.getMessage());
 		}
 		
-		new Thread(new ServerAccepter(server, this)).start();
+		this.sa = new ServerAccepterThread(server, this);
+		this.sa.start();
 		
 	}
 	
-	public boolean getisrunning() {
-		
-		return this.isruninng;
-		
-	}
 
 	public void putBufferedWriter(BufferedWriter bw) {
 		// TODO Auto-generated method stub
@@ -85,7 +80,7 @@ public class Server {
 				br.newLine();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				mg.error("서버 전송 오류", "클라이언트에게 메시지를 전송할 수 없습니다.");
+				mg.error("서버 전송 오류", "클라이언트에게 메시지를 전송할 수 없습니다.\n" + e.getMessage());
 			}
 			
 		}
@@ -95,9 +90,9 @@ public class Server {
 	
 	public void shutdown(int status) {
 		
-		this.isruninng = false;
-		
 		log.serverstatus(status);
+		
+		this.sa.kill();
 		
 		Iterator<BufferedWriter> it = bw.iterator();
 		
