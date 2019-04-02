@@ -25,11 +25,14 @@ public class Server {
 	private ServerSocket server;
 	private ArrayList<BufferedWriter> bw = new ArrayList<>();
 	private ServerLogGUI log;
+	private boolean isruninng;
 	
 	public MainGUI mg;
 	
 	public Server(String servername) {
 		this.servername = servername;
+		this.isruninng = true;
+		this.log = new ServerLogGUI(this.servername, this);
 		mg = new MainGUI(this.log); 
 		/* 
 	 	Since different server instance uses different ServerLogGUI instance,
@@ -50,6 +53,12 @@ public class Server {
 		}
 		
 		new Thread(new ServerAccepter(server, this)).start();
+		
+	}
+	
+	public boolean getisrunning() {
+		
+		return this.isruninng;
 		
 	}
 
@@ -74,7 +83,6 @@ public class Server {
 				br.flush();
 				br.write(msg);
 				br.newLine();
-				br.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				mg.error("서버 전송 오류", "클라이언트에게 메시지를 전송할 수 없습니다.");
@@ -82,6 +90,28 @@ public class Server {
 			
 		}
 		
+		
+	}
+	
+	public void shutdown(int status) {
+		
+		this.isruninng = false;
+		
+		log.serverstatus(status);
+		
+		Iterator<BufferedWriter> it = bw.iterator();
+		
+		while(it.hasNext()) {
+			
+			try {
+				BufferedWriter br = it.next();
+				br.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				mg.error("서버를 닫을 수 없습니다!",e.getMessage());
+			}
+			
+		}
 		
 	}
 	

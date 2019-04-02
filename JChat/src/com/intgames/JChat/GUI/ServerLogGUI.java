@@ -78,4 +78,23 @@ public class ServerLogGUI extends JFrame {
 			
 		}
 	}
+	
+	public void serverstatus(int status) {
+		
+		switch(status) {
+		
+		case 0:
+			
+			
+		case 1:
+			
+			
+			
+		default:
+		
+		}
+		
+	}
+	
+	
 }

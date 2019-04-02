@@ -17,18 +17,26 @@ public class ServerAccepter implements Runnable {
 	private BufferedWriter bw;
 	private Server svr;
 	private MainGUI mg;
+	private boolean isrunning;
 	
 	public ServerAccepter(ServerSocket server, Server svr) {
 		// TODO Auto-generated constructor stub
 		this.sock = server;
 		this.svr = svr;
 		this.mg = svr.mg;
+		this.isrunning = true;
 	}
 
+	public void setisrunning(boolean isrunning) {
+		
+		this.isrunning = isrunning;
+		
+	}
+	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-			while (true) {
+			while (isrunning) {
 				
 				Socket sc = null;
 				BufferedReader br = null;
@@ -36,31 +44,13 @@ public class ServerAccepter implements Runnable {
 				try {
 					
 					sc = sock.accept();
+					bw = new BufferedWriter(new OutputStreamWriter(sc.getOutputStream()));
+					svr.putBufferedWriter(bw);
+					br = new BufferedReader(new InputStreamReader(sc.getInputStream()));
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					mg.error("클라이언트 연결 오류!", "클라이언트와 연결하지 못했습니다.");
-					continue;
-				}
-				
-				
-				try {
-				
-				bw = new BufferedWriter(new OutputStreamWriter(sc.getOutputStream()));
-				svr.putBufferedWriter(bw);
-				
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					mg.error("클라이언트 연결 오류!", "클라이언트의 OutputStream을 가져오는 데 실패했습니다.");
-					continue;
-				}
-
-				
-				try {
-					br = new BufferedReader(new InputStreamReader(sc.getInputStream()));
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					mg.error("클라이언트 연결 오류!", "클라이언트의 InputStream을 가져오는 데 실패했습니다.");
+					mg.error("클라이언트 연결 오류!", e.getMessage());
 					continue;
 				}
 				
