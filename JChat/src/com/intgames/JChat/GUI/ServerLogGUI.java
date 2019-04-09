@@ -37,17 +37,11 @@ public class ServerLogGUI extends JFrame {
 		this.server = server;
 		
 		try {
-			br = new BufferedWriter(new FileWriter(new File(filef.format(System.currentTimeMillis()) + svr)));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			server.mg.error("로그 파일 제작 실패!", "로그 파일을 제작하는 데 실패했습니다!\n" + e.getMessage());
-		}
-		
-		try {
+			br = new BufferedWriter(new FileWriter(new File(filef.format(System.currentTimeMillis()) + "-" + svr + ".txt")));
 			br.write("---------------" + dayinlogf.format(System.currentTimeMillis()) + week[oCalendar.get(Calendar.DAY_OF_WEEK) - 1] + "요일" + " ---------------");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			server.mg.error("로그 파일 제작 중 오류", "로그 파일에 적어넣는 도중 실패했습니다!\n" + e.getMessage());
+			server.mg.error("로그 파일 제작 실패!", "로그 파일을 제작하는 도중 오류가 발생했습니다!\n" + e.getMessage());
 		}
 		
 	}
@@ -81,13 +75,19 @@ public class ServerLogGUI extends JFrame {
 	
 	public void serverstatus(int status) {
 		
+		/**
+		 * 
+		 * 0 means good exit
+		 * 1 means exit with error
+		 * 
+		 * */
+		
 		switch(status) {
 		
 			case 0:
 			
 			
 			case 1:
-			
 			
 			
 			default:
