@@ -29,7 +29,7 @@ public class ServerLogGUI extends JFrame {
 	private Server server;
 	
 	
-	public ServerLogGUI(String servername, Server server) {
+	public ServerLogGUI(String servername, Server server, String logpath) {
 		// TODO Auto-generated constructor stub
 		
 		today = dayf.format(System.currentTimeMillis());
@@ -37,7 +37,7 @@ public class ServerLogGUI extends JFrame {
 		this.server = server;
 		
 		try {
-			br = new BufferedWriter(new FileWriter(new File(filef.format(System.currentTimeMillis()) + "-" + svr + ".txt")));
+			br = new BufferedWriter(new FileWriter(new File(logpath + "\\" + filef.format(System.currentTimeMillis()) + "-" + svr + ".txt")));
 			br.write("---------------" + dayinlogf.format(System.currentTimeMillis()) + week[oCalendar.get(Calendar.DAY_OF_WEEK) - 1] + "ø‰¿œ" + " ---------------");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

@@ -29,9 +29,9 @@ public class Server {
 	
 	public MainGUI mg;
 	
-	public Server(String servername) {
+	public Server(String servername, String path) {
 		this.servername = servername;
-		this.log = new ServerLogGUI(this.servername, this);
+		this.log = new ServerLogGUI(this.servername, this, path);
 		mg = new MainGUI(this.log); 
 		/* 
 	 	Since different server instance uses different ServerLogGUI instance,
@@ -41,8 +41,6 @@ public class Server {
 	}
 
 	public void setnetwork(int port) {
-		
-		log = new ServerLogGUI(servername, this);
 		
 		try {
 			server = new ServerSocket(port);
