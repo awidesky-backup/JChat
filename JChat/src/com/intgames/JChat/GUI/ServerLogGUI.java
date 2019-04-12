@@ -10,6 +10,7 @@ import java.util.Calendar;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
+import com.intgames.JChat.Message;
 import com.intgames.JChat.Server;
 
 @SuppressWarnings("serial")
@@ -47,8 +48,11 @@ public class ServerLogGUI extends JFrame {
 	}
 	
 	
-	public void println(String log, String who) {
+	public void println(Message log, double ping) {
 
+		String who = log.getWho();
+		
+		
 		try {
 		
 			if (today != dayf.format(System.currentTimeMillis())) {
@@ -57,8 +61,8 @@ public class ServerLogGUI extends JFrame {
 				today = dayf.format(System.currentTimeMillis());
 	
 			}
-		
-			if (who != null) who = "[" + who + "] ";
+			// 핑이 -1.0이면 안적기
+			if (who != null) who = "[" + who + "] [ " + ping +"ms] ";
 			else who = "_SYSTEM_ ";
 		
 			text.append(who + timeinlogf.format(System.currentTimeMillis()) + log + "\n");

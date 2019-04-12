@@ -1,7 +1,7 @@
 package com.intgames.JChat;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -24,7 +24,7 @@ public class Server {
 	private String servername;
 	private ServerSocket server;
 	private ServerAccepterThread sa;
-	private ArrayList<BufferedWriter> bw = new ArrayList<>();
+	private ArrayList<ObjectOutputStream> bw = new ArrayList<>();
 	private ServerLogGUI log;
 	
 	public MainGUI mg;
@@ -55,27 +55,26 @@ public class Server {
 	}
 	
 
-	public void putBufferedWriter(BufferedWriter bw) {
+	public void putObjectOutputStream(ObjectOutputStream oo) {
 		// TODO Auto-generated method stub
-		this.bw.add(bw);
+		this.bw.add(oo);
 		
 	}
 	
-	public void sendEveryone(String who, String msg) {
+	public void sendEveryone(Message msg, double ping) {
 		
-		log.println(msg, who);
+		log.println(msg, ping);
 		
-		Iterator<BufferedWriter> it = bw.iterator();
+		Iterator<ObjectOutputStream> it = bw.iterator();
 		
 		while(it.hasNext()) {
 			
 			try {
-				BufferedWriter br = it.next();
-				br.write(who);
-				br.newLine();
-				br.flush();
-				br.write(msg);
-				br.newLine();
+				ObjectOutputStream oo = it.next();
+				msg.readyToSend();
+				oo.writeObject(msg);
+				oo.flush();
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				mg.error("서버 전송 오류", "클라이언트에게 메시지를 전송할 수 없습니다.\n" + e.getMessage());
@@ -92,12 +91,12 @@ public class Server {
 		
 		this.sa.kill();
 		
-		Iterator<BufferedWriter> it = bw.iterator();
+		Iterator<ObjectOutputStream> it = bw.iterator();
 		
 		while(it.hasNext()) {
 			
 			try {
-				BufferedWriter br = it.next();
+				ObjectOutputStream br = it.next();
 				br.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -109,3 +108,9 @@ public class Server {
 	}
 	
 }
+
+
+
+
+
+

@@ -1,10 +1,8 @@
 package com.intgames.JChat.runnables;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Iterator;
@@ -16,7 +14,7 @@ import com.intgames.JChat.GUI.MainGUI;
 public class ServerAccepterThread extends Thread {
 
 	private ServerSocket sock;
-	private BufferedWriter bw;
+	private ObjectOutputStream oo;
 	private Server svr;
 	private MainGUI mg;
 	private LinkedList<MessageGetterThread> msggetter = new LinkedList<>();
@@ -37,14 +35,14 @@ public class ServerAccepterThread extends Thread {
 			while (isrunning) {
 				
 				Socket sc = null;
-				BufferedReader br = null;
+				ObjectInputStream oi = null;
 				
 				try {
 					
 					sc = sock.accept();
-					bw = new BufferedWriter(new OutputStreamWriter(sc.getOutputStream()));
-					svr.putBufferedWriter(bw);
-					br = new BufferedReader(new InputStreamReader(sc.getInputStream()));
+					oo = new ObjectOutputStream(sc.getOutputStream());
+					svr.putObjectOutputStream(oo);
+					oi = new ObjectInputStream(sc.getInputStream());
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -52,7 +50,7 @@ public class ServerAccepterThread extends Thread {
 					continue;
 				}
 				
-				MessageGetterThread th = new MessageGetterThread(br, this.svr);
+				MessageGetterThread th = new MessageGetterThread(oi, this.svr);
 				this.msggetter.add(th);
 				th.start();
 				

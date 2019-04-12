@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import com.intgames.JChat.Client;
+import com.intgames.JChat.Message;
 
 @SuppressWarnings("serial")
 public class MainGUI extends JFrame {
@@ -29,7 +30,7 @@ public class MainGUI extends JFrame {
 	public void error(String title, String message) {
 		
 		JOptionPane.showMessageDialog(null, message , title , JOptionPane.ERROR_MESSAGE);
-		log.println(title + " : " + message, null);
+		log.println(new Message(null, title + " : " + message), -1.0);
 		
 	}
 
