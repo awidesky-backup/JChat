@@ -32,31 +32,35 @@ public class ServerAccepterThread extends Thread {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-			while (isrunning) {
+		while (isrunning) {
 				
-				Socket sc = null;
-				ObjectInputStream oi = null;
-				
-				try {
-					
-					sc = sock.accept();
-					oo = new ObjectOutputStream(sc.getOutputStream());
-					svr.putObjectOutputStream(oo);
-					oi = new ObjectInputStream(sc.getInputStream());
-					
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					mg.error("클라이언트 연결 오류!", "클라이언트와 연결하는 도중 문제가 발생했습니다!\n" + e.getMessage());
-					continue;
-				}
-				
-				MessageGetterThread th = new MessageGetterThread(oi, this.svr);
-				this.msggetter.add(th);
-				th.start();
+			Accept();
 				
 		}
 	}
 	
+	private void Accept() {
+		
+		Socket sc = null;
+		ObjectInputStream oi = null;
+		
+		try {
+			
+			sc = sock.accept();
+			oo = new ObjectOutputStream(sc.getOutputStream());
+			svr.putObjectOutputStream(oo);
+			oi = new ObjectInputStream(sc.getInputStream());
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			mg.error("클라이언트 연결 오류!", "클라이언트와 연결하는 도중 문제가 발생했습니다!\n" + e.getMessage());
+		}
+		
+		MessageGetterThread th = new MessageGetterThread(oi, this.svr);
+		this.msggetter.add(th);
+		th.start();
+		
+	}
 	
 	public void kill() {
 		

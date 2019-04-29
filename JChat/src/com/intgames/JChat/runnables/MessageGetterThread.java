@@ -30,7 +30,7 @@ public class MessageGetterThread extends Thread {
 		
 	}
 	
-	public void getmessage() {
+	private void getmessage() {
 		
 		Message msg = null;
 		double ping = 0;
