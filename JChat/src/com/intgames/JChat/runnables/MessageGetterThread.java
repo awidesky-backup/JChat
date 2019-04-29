@@ -21,28 +21,34 @@ public class MessageGetterThread extends Thread {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+	
+		while (this.isrunning) {
+			
+			this.getmessage();
+			
+		}
+		
+	}
+	
+	public void getmessage() {
+		
 		Message msg = null;
 		double ping = 0;
 		
-		
-		while (this.isrunning) {
+		try {
+			msg = (Message)oi.readObject();
+			ping = msg.getPing(System.nanoTime());
 			
-			try {
-				msg = (Message)oi.readObject();
-				ping = msg.getPing(System.nanoTime());
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				svr.mg.error("데이터 수신 오류!", "메시지를 받아오는 데 실패했습니다.\n" + e.getMessage());
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				svr.mg.error("데이터 수신 오류!", "수신된 데이터를 변환하는 도중 문제가 발생했습니다.\n" + e.getMessage());
-			}
-		
-			svr.sendEveryone(msg, ping);
-		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			svr.mg.error("데이터 수신 오류!", "메시지를 받아오는 데 실패했습니다.\n" + e.getMessage());
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			svr.mg.error("데이터 수신 오류!", "수신된 데이터를 변환하는 도중 문제가 발생했습니다.\n" + e.getMessage());
 		}
-		
+	
+		svr.sendEveryone(msg, ping);
+	
 	}
 
 	public void kill() {
