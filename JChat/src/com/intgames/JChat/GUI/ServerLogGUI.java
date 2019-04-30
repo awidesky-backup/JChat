@@ -10,8 +10,8 @@ import java.util.Calendar;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
-import com.intgames.JChat.Message;
-import com.intgames.JChat.Server;
+import com.intgames.JChat.core.Server;
+import com.intgames.JChat.resources.Message;
 
 @SuppressWarnings("serial")
 public class ServerLogGUI extends JFrame {

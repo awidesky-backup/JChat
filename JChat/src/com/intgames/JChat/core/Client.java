@@ -1,4 +1,4 @@
-package com.intgames.JChat;
+package com.intgames.JChat.core;
 
 import java.io.IOException;
 import java.net.Socket;

@@ -1,13 +1,15 @@
-package com.intgames.JChat;
+package com.intgames.JChat.core;
 
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import com.intgames.JChat.GUI.MainGUI;
 import com.intgames.JChat.GUI.ServerLogGUI;
+import com.intgames.JChat.resources.Message;
+import com.intgames.JChat.resources.MessageOutputStream;
 import com.intgames.JChat.runnables.ServerAccepterThread;
 
 public class Server {
@@ -24,7 +26,7 @@ public class Server {
 	private String servername;
 	private ServerSocket server;
 	private ServerAccepterThread sa;
-	private ArrayList<ObjectOutputStream> bw = new ArrayList<>();
+	private List<MessageOutputStream> bw = new LinkedList<>();
 	private ServerLogGUI log;
 	
 	public MainGUI mg;
@@ -55,7 +57,7 @@ public class Server {
 	}
 	
 
-	public void putObjectOutputStream(ObjectOutputStream oo) {
+	public void putObjectOutputStream(MessageOutputStream oo) {
 		// TODO Auto-generated method stub
 		this.bw.add(oo);
 		
@@ -65,16 +67,13 @@ public class Server {
 		
 		log.println(msg, ping);
 		
-		Iterator<ObjectOutputStream> it = bw.iterator();
+		Iterator<MessageOutputStream> it = bw.iterator();
 		
 		while(it.hasNext()) {
 			
 			try {
-				ObjectOutputStream oo = it.next();
-				msg.readyToSend();
-				oo.writeObject(msg);
-				oo.flush();
-				
+				MessageOutputStream oo = it.next();
+				oo.writeMessage(msg);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				mg.error("서버 전송 오류", "클라이언트에게 메시지를 전송할 수 없습니다.\n" + e.getMessage());
@@ -91,12 +90,12 @@ public class Server {
 		
 		this.sa.kill();
 		
-		Iterator<ObjectOutputStream> it = bw.iterator();
+		Iterator<MessageOutputStream> it = bw.iterator();
 		
 		while(it.hasNext()) {
 			
 			try {
-				ObjectOutputStream br = it.next();
+				MessageOutputStream br = it.next();
 				br.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

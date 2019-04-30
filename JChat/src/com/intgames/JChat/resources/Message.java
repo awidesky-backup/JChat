@@ -1,4 +1,4 @@
-package com.intgames.JChat;
+package com.intgames.JChat.resources;
 
 import java.io.Serializable;
 
@@ -6,6 +6,8 @@ public class Message implements Serializable{
 
 	/**
 	 * MUST CALL readyToSend() BEFORE SERIALIZE!!
+	 * writeMessage() method of MessageOutputStream class calls readyToSend() before serializing and sending.
+	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
@@ -20,9 +22,10 @@ public class Message implements Serializable{
 		
 	}
 	
-	public void readyToSend() {
+	public Message readyToSend() {
 		
 		this.starttime = System.nanoTime();
+		return this;
 		
 	}
 

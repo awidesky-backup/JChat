@@ -7,17 +7,21 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
-import com.intgames.JChat.Server;
 import com.intgames.JChat.GUI.MainGUI;
+import com.intgames.JChat.core.Server;
+import com.intgames.JChat.resources.MessageInputStream;
+import com.intgames.JChat.resources.MessageOutputStream;
 
 public class ServerAccepterThread extends Thread {
 
 	private ServerSocket sock;
-	private ObjectOutputStream oo;
+	private MessageOutputStream mo;
+	private ObjectInputStream oi;
 	private Server svr;
 	private MainGUI mg;
-	private LinkedList<MessageGetterThread> msggetter = new LinkedList<>();
+	private List<MessageGetterThread> msggetter = new LinkedList<>();
 	private boolean isrunning;
 	
 	public ServerAccepterThread(ServerSocket server, Server svr) {
@@ -34,7 +38,7 @@ public class ServerAccepterThread extends Thread {
 		// TODO Auto-generated method stub
 		while (isrunning) {
 				
-			Accept();
+			this.Accept();
 				
 		}
 	}
@@ -42,15 +46,13 @@ public class ServerAccepterThread extends Thread {
 	private void Accept() {
 		
 		Socket sc = null;
-		ObjectInputStream oi = null;
 		
 		try {
 			
 			sc = sock.accept();
-			oo = new ObjectOutputStream(sc.getOutputStream());
-			svr.putObjectOutputStream(oo);
+			mo = (MessageOutputStream) new ObjectOutputStream(sc.getOutputStream());
+			svr.putObjectOutputStream(mo);
 			oi = new ObjectInputStream(sc.getInputStream());
-			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			mg.error("클라이언트 연결 오류!", "클라이언트와 연결하는 도중 문제가 발생했습니다!\n" + e.getMessage());

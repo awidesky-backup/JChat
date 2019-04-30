@@ -3,8 +3,8 @@ package com.intgames.JChat.GUI;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import com.intgames.JChat.Client;
-import com.intgames.JChat.Message;
+import com.intgames.JChat.core.Client;
+import com.intgames.JChat.resources.Message;
 
 @SuppressWarnings("serial")
 public class MainGUI extends JFrame {

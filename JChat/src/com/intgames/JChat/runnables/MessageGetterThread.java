@@ -3,8 +3,8 @@ package com.intgames.JChat.runnables;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-import com.intgames.JChat.Message;
-import com.intgames.JChat.Server;
+import com.intgames.JChat.core.Server;
+import com.intgames.JChat.resources.Message;
 
 public class MessageGetterThread extends Thread {
 
