@@ -33,7 +33,7 @@ public class MessageGetterThread extends Thread {
 	private void getmessage() {
 		
 		Message msg = null;
-		double ping = 0;
+		long ping = 0L;
 		
 		try {
 			msg = (Message)oi.readObject();

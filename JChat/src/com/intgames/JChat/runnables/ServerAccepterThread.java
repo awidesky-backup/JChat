@@ -11,7 +11,6 @@ import java.util.List;
 
 import com.intgames.JChat.GUI.MainGUI;
 import com.intgames.JChat.core.Server;
-import com.intgames.JChat.resources.MessageInputStream;
 import com.intgames.JChat.resources.MessageOutputStream;
 
 public class ServerAccepterThread extends Thread {

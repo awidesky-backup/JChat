@@ -48,10 +48,23 @@ public class ServerLogGUI extends JFrame {
 	}
 	
 	
-	public void println(Message log, double ping) {
+	public void println(Message log, long ping) {
 
 		String who = log.getWho();
+		String sping = Long.toString(ping);
+		StringBuilder sb = new StringBuilder(sping); //used to insert dot
 		
+		
+		// 핑이 -1.0이면 안적기
+		if (ping != -1) {
+			
+			sping = sb.insert(sping.length() - 6, ".").toString();
+			
+		} else {
+			// Message by System
+			sping = "-";
+			
+		}
 		
 		try {
 		
@@ -61,8 +74,8 @@ public class ServerLogGUI extends JFrame {
 				today = dayf.format(System.currentTimeMillis());
 	
 			}
-			// 핑이 -1.0이면 안적기
-			if (who != null) who = "[" + who + "] [ " + ping +"ms] ";
+			
+			if (who != null) who = "[" + who + "] [ " + sping +"ms] ";
 			else who = "_SYSTEM_ ";
 		
 			text.append(who + timeinlogf.format(System.currentTimeMillis()) + log + "\n");
