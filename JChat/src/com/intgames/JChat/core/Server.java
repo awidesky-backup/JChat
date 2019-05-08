@@ -49,6 +49,10 @@ public class Server {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			mg.error("ServerSocket 생성 실패!", "ServerSocket 생성에 실패했습니다!\n" + e.getMessage());
+
+		
+		
+		
 		}
 		
 		this.sa = new ServerAccepterThread(server, this);

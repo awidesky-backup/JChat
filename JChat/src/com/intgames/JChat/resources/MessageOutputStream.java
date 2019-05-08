@@ -23,8 +23,8 @@ public class MessageOutputStream extends ObjectOutputStream {
 		 * flushes the buffer after sending, no flush() needed after calling this method.
 		 * */
 		
-		this.writeObject(msg.readyToSend());
-		this.flush();
+		writeObject(msg.readyToSend());
+		flush();
 		
 	}
 
