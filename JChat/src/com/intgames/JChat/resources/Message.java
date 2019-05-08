@@ -41,9 +41,9 @@ public class Message implements Serializable{
 		
 	}
 
-	public double getPing(long now) {
+	public long getPing(long now) {
 		
-		return (now - starttime)/1e6;
+		return now - starttime;
 		
 	}
 

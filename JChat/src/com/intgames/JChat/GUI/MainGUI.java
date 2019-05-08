@@ -30,7 +30,7 @@ public class MainGUI extends JFrame {
 	public void error(String title, String message) {
 		
 		JOptionPane.showMessageDialog(null, message , title , JOptionPane.ERROR_MESSAGE);
-		log.println(new Message(null, title + " : " + message), -1.0);
+		log.println(new Message(null, title + " : " + message), -1L);
 		
 	}
 

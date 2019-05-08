@@ -67,7 +67,7 @@ public class Server {
 		
 	}
 	
-	public void sendEveryone(Message msg, double ping) {
+	public void sendEveryone(Message msg, long ping) {
 		
 		log.println(msg, ping);
 		
