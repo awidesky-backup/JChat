@@ -30,11 +30,11 @@ public class ServerLogGUI extends JFrame {
 	private Server server;
 	
 	
-	public ServerLogGUI(String servername, Server server, String logpath) {
+	public ServerLogGUI(Server server, String logpath) {
 		// TODO Auto-generated constructor stub
 		
 		today = dayf.format(System.currentTimeMillis());
-		svr = servername;
+		svr = server.getservername();
 		this.server = server;
 		
 		try {
@@ -103,12 +103,16 @@ public class ServerLogGUI extends JFrame {
 		
 			case 0:
 			
+				println(new Message(null, "서버 종료 시도... 요류 없음"), -1);
 			
 			case 1:
 			
+				println(new Message(null, "서버 종료 시도... errorlevel : 1"), -1);
 			
 			default:
 		
+				println(new Message(null, "서버 종료 시도... errorlevel : ?"), -1);
+				
 		}
 		
 	}

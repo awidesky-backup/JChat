@@ -33,11 +33,12 @@ public class Server {
 	
 	public Server(String servername, String path) {
 		this.servername = servername;
-		this.log = new ServerLogGUI(this.servername, this, path);
-		mg = new MainGUI(this.log); 
+		this.log = new ServerLogGUI(this, path);
+		this.mg = new MainGUI(this.log); 
+		
 		/* 
 	 	Since different server instance uses different ServerLogGUI instance,
-	 	give ServerLogGUI instance of server to 
+	 	give ServerLogGUI a Server object.
 		*/
 		 
 	}
@@ -45,21 +46,26 @@ public class Server {
 	public void setnetwork(int port) {
 		
 		try {
+			
 			server = new ServerSocket(port);
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			mg.error("ServerSocket 생성 실패!", "ServerSocket 생성에 실패했습니다!\n" + e.getMessage());
-
-		
-		
 		
 		}
 		
 		this.sa = new ServerAccepterThread(server, this);
+		this.sa.setDaemon(true);
 		this.sa.start();
 		
 	}
 	
+	public String getservername() {
+		
+		return this.servername;
+		
+	}
 
 	public void putObjectOutputStream(MessageOutputStream oo) {
 		// TODO Auto-generated method stub
@@ -76,8 +82,10 @@ public class Server {
 		while(it.hasNext()) {
 			
 			try {
+				
 				MessageOutputStream oo = it.next();
 				oo.writeMessage(msg);
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				mg.error("서버 전송 오류", "클라이언트에게 메시지를 전송할 수 없습니다.\n" + e.getMessage());
@@ -99,8 +107,10 @@ public class Server {
 		while(it.hasNext()) {
 			
 			try {
+				
 				MessageOutputStream br = it.next();
 				br.close();
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				mg.error("서버를 닫을 수 없습니다!",e.getMessage());

@@ -52,6 +52,7 @@ public class ServerAccepterThread extends Thread {
 			mo = (MessageOutputStream) new ObjectOutputStream(sc.getOutputStream());
 			svr.putObjectOutputStream(mo);
 			oi = new ObjectInputStream(sc.getInputStream());
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			mg.error("클라이언트 연결 오류!", "클라이언트와 연결하는 도중 문제가 발생했습니다!\n" + e.getMessage());
@@ -59,6 +60,7 @@ public class ServerAccepterThread extends Thread {
 		
 		MessageGetterThread th = new MessageGetterThread(oi, this.svr);
 		this.msggetter.add(th);
+		th.setDaemon(true);
 		th.start();
 		
 	}

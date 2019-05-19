@@ -21,6 +21,7 @@ public class MainGUI extends JFrame {
 	public MainGUI(ServerLogGUI log) {
 		// TODO Auto-generated constructor stub
 		this.log = log;
+		
 	}
 
 	public MainGUI(Client client) {
