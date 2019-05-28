@@ -4,17 +4,16 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import com.intgames.JChat.GUI.MainGUI;
+import com.intgames.JChat.GUI.ErrorGUI;
 
 public class Client  {
 
 	private Socket sock;
 	
-	public MainGUI mg;
+	public ErrorGUI mg;
 	
 	public Client() {
 		
-		mg = new MainGUI(this);
 		
 	}
 	
@@ -68,6 +67,11 @@ public class Client  {
 				
 			}).start();*/
 
+	}
+
+	public String getclientname() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 

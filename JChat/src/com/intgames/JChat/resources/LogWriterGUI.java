@@ -1,4 +1,4 @@
-package com.intgames.JChat.GUI;
+package com.intgames.JChat.resources;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -7,42 +7,58 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
+import com.intgames.JChat.core.Client;
 import com.intgames.JChat.core.Server;
-import com.intgames.JChat.resources.Message;
 
-@SuppressWarnings("serial")
-public class ServerLogGUI extends JFrame {
+public class LogWriterGUI {
 
-	private JTextArea text;
 	final String[] week = { "일", "월", "화", "수", "목", "금", "토" };
 	private Calendar oCalendar;
 	private BufferedWriter br;
-	private String svr;
+	private String name;
 	
+	private JTextArea jta = new JTextArea("");
 	private SimpleDateFormat filef = new SimpleDateFormat("yyyy_MM_dd_HH_mm");
 	private SimpleDateFormat dayf = new SimpleDateFormat("dd");
 	private SimpleDateFormat timeinlogf = new SimpleDateFormat("[a hh:mm] ");
 	private SimpleDateFormat dayinlogf = new SimpleDateFormat(" yyyy년 MM월 dd일 ");
 	private String today;
-	private Server server;
+	private Server server = null;
+	private Client client = null;
 	
 	
-	public ServerLogGUI(Server server, String logpath) {
+	public LogWriterGUI(Server server, String logpath) {
 		// TODO Auto-generated constructor stub
 		
 		today = dayf.format(System.currentTimeMillis());
-		svr = server.getservername();
+		name = server.getservername();
 		this.server = server;
 		
 		try {
-			br = new BufferedWriter(new FileWriter(new File(logpath + "\\" + filef.format(System.currentTimeMillis()) + "-" + svr + ".txt")));
-			br.write("---------------" + dayinlogf.format(System.currentTimeMillis()) + week[oCalendar.get(Calendar.DAY_OF_WEEK) - 1] + "요일" + " ---------------");
+			br = new BufferedWriter(new FileWriter(new File(logpath + "\\" + filef.format(System.currentTimeMillis()) + "-" + name + ".txt")));
+			append("---------------" + dayinlogf.format(System.currentTimeMillis()) + week[oCalendar.get(Calendar.DAY_OF_WEEK) - 1] + "요일" + " ---------------");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			server.mg.error("로그 파일 제작 실패!", "로그 파일을 제작하는 도중 오류가 발생했습니다!\n" + e.getMessage());
+		}
+		
+	}
+	
+	public LogWriterGUI(Client client, String logpath) {
+		// TODO Auto-generated constructor stub
+		
+		today = dayf.format(System.currentTimeMillis());
+		name = client.getclientname();
+		this.client = client;
+		
+		try {
+			br = new BufferedWriter(new FileWriter(new File(logpath + "\\" + filef.format(System.currentTimeMillis()) + "-" + name + ".txt")));
+			append("---------------" + dayinlogf.format(System.currentTimeMillis()) + week[oCalendar.get(Calendar.DAY_OF_WEEK) - 1] + "요일" + " ---------------");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			client.mg.error("로그 파일 제작 실패!", "로그 파일을 제작하는 도중 오류가 발생했습니다!\n" + e.getMessage());
 		}
 		
 	}
@@ -70,7 +86,7 @@ public class ServerLogGUI extends JFrame {
 		
 			if (today != dayf.format(System.currentTimeMillis())) {
 				
-				br.write("---------------" + dayinlogf.format(System.currentTimeMillis()) + week[oCalendar.get(Calendar.DAY_OF_WEEK) - 1] + "요일" + " ---------------");
+				append("---------------" + dayinlogf.format(System.currentTimeMillis()) + week[oCalendar.get(Calendar.DAY_OF_WEEK) - 1] + "요일" + " ---------------");
 				today = dayf.format(System.currentTimeMillis());
 	
 			}
@@ -78,15 +94,12 @@ public class ServerLogGUI extends JFrame {
 			if (who != null) who = "[" + who + "] [ " + sping +"ms] ";
 			else who = "_SYSTEM_ ";
 		
-			text.append(who + timeinlogf.format(System.currentTimeMillis()) + log + "\n");
-
-			br.write(who + timeinlogf.format(System.currentTimeMillis()) + log + "\n");
-			br.flush();
+			append(who + timeinlogf.format(System.currentTimeMillis()) + log.getMsg() + "\n");
 			
 		} catch (IOException e) {
 			
-			server.mg.error("로그 파일 제작 중 오류", "로그 파일에 적어넣는 도중 실패했습니다!\n" + e.getMessage());
-			
+			if (server !=null) server.mg.error("로그 파일 제작 중 오류", "로그 파일에 적어넣는 도중 실패했습니다!\n" + e.getMessage());
+			else client.mg.error("로그 파일 제작 중 오류", "로그 파일에 적어넣는 도중 실패했습니다!\n" + e.getMessage());
 		}
 	}
 	
@@ -114,6 +127,21 @@ public class ServerLogGUI extends JFrame {
 				println(new Message(null, "서버 종료 시도... errorlevel : ?"), -1);
 				
 		}
+		
+	}
+	
+	private void append(String log) throws IOException {
+		
+		br.write(log);
+		br.flush();
+		jta.append(log);
+		
+	}
+	
+	public void windowOpen() {
+		
+		
+		
 		
 	}
 	

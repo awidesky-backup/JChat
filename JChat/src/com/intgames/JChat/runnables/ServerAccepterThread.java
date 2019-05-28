@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.intgames.JChat.GUI.MainGUI;
+import com.intgames.JChat.GUI.ErrorGUI;
 import com.intgames.JChat.core.Server;
 import com.intgames.JChat.resources.MessageOutputStream;
 
@@ -19,7 +19,7 @@ public class ServerAccepterThread extends Thread {
 	private MessageOutputStream mo;
 	private ObjectInputStream oi;
 	private Server svr;
-	private MainGUI mg;
+	private ErrorGUI mg;
 	private List<MessageGetterThread> msggetter = new LinkedList<>();
 	private boolean isrunning;
 	
