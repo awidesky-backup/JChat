@@ -1,4 +1,4 @@
-package com.intgames.JChat.resources;
+package com.intgames.JChat.GUI;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,6 +11,7 @@ import javax.swing.JTextArea;
 
 import com.intgames.JChat.core.Client;
 import com.intgames.JChat.core.Server;
+import com.intgames.JChat.resources.Message;
 
 public class LogWriterGUI {
 

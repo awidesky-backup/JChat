@@ -3,7 +3,6 @@ package com.intgames.JChat.GUI;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import com.intgames.JChat.resources.LogWriterGUI;
 import com.intgames.JChat.resources.Message;
 
 @SuppressWarnings("serial")

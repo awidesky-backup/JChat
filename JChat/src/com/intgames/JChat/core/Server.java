@@ -7,8 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.intgames.JChat.GUI.ErrorGUI;
+import com.intgames.JChat.GUI.LogWriterGUI;
 import com.intgames.JChat.GUI.MainGUI;
-import com.intgames.JChat.resources.LogWriterGUI;
 import com.intgames.JChat.resources.Message;
 import com.intgames.JChat.resources.MessageOutputStream;
 import com.intgames.JChat.runnables.ServerAccepterThread;
@@ -123,7 +123,7 @@ public class Server {
 	
 	public static void main(String args[]) {
 		
-		new MainGUI();
+		new MainGUI(new Server(null, null));
 		
 	}
 	
