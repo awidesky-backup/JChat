@@ -1,4 +1,4 @@
-package com.intgames.JChat.GUI;
+package com.intgames.JChat.core;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -9,11 +9,10 @@ import java.util.Calendar;
 
 import javax.swing.JTextArea;
 
-import com.intgames.JChat.core.Client;
-import com.intgames.JChat.core.Server;
+import com.intgames.JChat.resources.Log;
 import com.intgames.JChat.resources.Message;
 
-public class LogWriterGUI {
+public class ServerLogGUI extends Log{
 
 	final String[] week = { "일", "월", "화", "수", "목", "금", "토" };
 	private Calendar oCalendar;
@@ -30,7 +29,7 @@ public class LogWriterGUI {
 	private Client client = null;
 	
 	
-	public LogWriterGUI(Server server, String logpath) {
+	public ServerLogGUI(Server server, String logpath) {
 		// TODO Auto-generated constructor stub
 		
 		today = dayf.format(System.currentTimeMillis());
@@ -47,7 +46,7 @@ public class LogWriterGUI {
 		
 	}
 	
-	public LogWriterGUI(Client client, String logpath) {
+	public ServerLogGUI(Client client, String logpath) {
 		// TODO Auto-generated constructor stub
 		
 		today = dayf.format(System.currentTimeMillis());
@@ -139,12 +138,7 @@ public class LogWriterGUI {
 		
 	}
 	
-	public void windowOpen() {
-		
-		
-		
-		
-	}
+	
 	
 	
 }

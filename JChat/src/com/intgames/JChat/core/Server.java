@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.intgames.JChat.GUI.ErrorGUI;
-import com.intgames.JChat.GUI.LogWriterGUI;
+import com.intgames.JChat.GUI.ClientLogGUI;
 import com.intgames.JChat.GUI.MainGUI;
 import com.intgames.JChat.resources.Message;
 import com.intgames.JChat.resources.MessageOutputStream;
@@ -28,13 +28,13 @@ public class Server {
 	private ServerSocket server;
 	private ServerAccepterThread sa;
 	private List<MessageOutputStream> bw = new LinkedList<>();
-	private LogWriterGUI log;
+	private ServerLogGUI log;
 	
 	public ErrorGUI mg;
 	
 	public Server(String servername, String path) {
 		this.servername = servername;
-		this.log = new LogWriterGUI(this, path);
+		this.log = new ServerLogGUI(this, path);
 		this.mg = new ErrorGUI(this.log); 
 		
 		/* 
