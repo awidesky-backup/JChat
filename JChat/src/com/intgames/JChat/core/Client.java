@@ -6,7 +6,7 @@ import java.net.UnknownHostException;
 
 import com.intgames.JChat.GUI.ErrorGUI;
 
-public class Client  {
+public class Client {
 
 	private Socket sock;
 	

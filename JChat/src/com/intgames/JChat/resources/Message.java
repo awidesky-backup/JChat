@@ -2,7 +2,7 @@ package com.intgames.JChat.resources;
 
 import java.io.Serializable;
 
-public class Message implements Serializable{
+public class Message implements Serializable {
 
 	/**
 	 * MUST CALL readyToSend() BEFORE SERIALIZE!!
