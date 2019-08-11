@@ -2,7 +2,6 @@ package com.intgames.JChat.runnables;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -10,8 +9,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.intgames.JChat.Exception.BannedClientException;
 import com.intgames.JChat.GUI.ErrorGUI;
-import com.intgames.JChat.core.ConnectedClient;
+import com.intgames.JChat.core.ClientData;
 import com.intgames.JChat.core.Server;
 import com.intgames.JChat.resources.MessageOutputStream;
 
@@ -52,9 +52,12 @@ public class ServerAccepterThread extends Thread {
 		try {
 			
 			sc = sock.accept();
+			
+			svr.checkClient(sc);
+			
 			ip = sc.getLocalAddress();
-			mo = (MessageOutputStream) new ObjectOutputStream(sc.getOutputStream());
-			svr.putConnectedClient(new ConnectedClient(mo, ip.toString()));
+			mo = new MessageOutputStream(sc.getOutputStream());
+			svr.addClientData(new ClientData(mo, ip));
 			oi = new ObjectInputStream(sc.getInputStream());
 			
 			
@@ -63,6 +66,11 @@ public class ServerAccepterThread extends Thread {
 			
 			mg.error("클라이언트 연결 오류!", "클라이언트와 연결하는 도중 문제가 발생했습니다!\n" + e.getMessage());
 			svr.showtext("클라이언트 연결 불가-"+ e.getMessage());
+			return;
+			
+		} catch (BannedClientException e) {
+			
+			svr.showtext("허용되지 않은 사용자 차단 - "+ e.getMessage());
 			return;
 			
 		}

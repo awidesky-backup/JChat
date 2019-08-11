@@ -1,13 +1,15 @@
 package com.intgames.JChat.core;
 
+import java.net.InetAddress;
+
 import com.intgames.JChat.resources.MessageOutputStream;
 
-public class ConnectedClient {
+public class ClientData {
 
-	public String ip;
+	public InetAddress ip;
 	public MessageOutputStream mo;
 	
-	public ConnectedClient(MessageOutputStream mo2, String ip2) {
+	public ClientData(MessageOutputStream mo2, InetAddress ip2) {
 		// TODO Auto-generated constructor stub
 		
 		ip = ip2;

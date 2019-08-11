@@ -1,13 +1,15 @@
 package com.intgames.JChat.core;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.intgames.JChat.Exception.BannedClientException;
 import com.intgames.JChat.GUI.ErrorGUI;
-import com.intgames.JChat.GUI.MainGUI;
 import com.intgames.JChat.GUI.ServerGUI;
 import com.intgames.JChat.resources.Log;
 import com.intgames.JChat.resources.LogAppender;
@@ -29,7 +31,8 @@ public class Server {
 	private String servername;
 	private ServerSocket serversc;
 	private ServerAccepterThread sa;
-	private List<ConnectedClient> bw = new LinkedList<>();
+	private List<ClientData> connectedClient = new LinkedList<>();
+	private List<String> banned = new LinkedList<>();
 	private Log log;
 	private ServerGUI sg;
 	
@@ -67,15 +70,28 @@ public class Server {
 		
 	}
 	
+	public void checkClient(Socket client) throws BannedClientException {
+		
+		String ip = client.getInetAddress().toString().split("/")[1];
+		if (!banned.contains(ip)) throw new BannedClientException("Banned ip : " + ip);
+		
+	}
+	
+	public void addBannedClient(InetAddress client) {
+		
+		banned.add(client.toString().split("/")[1]);
+		
+	}
+	
 	public String getservername() {
 		
 		return this.servername;
 		
 	}
 
-	public void putConnectedClient(ConnectedClient oo) {
+	public void addClientData(ClientData oo) {
 		// TODO Auto-generated method stub
-		this.bw.add(oo);
+		this.connectedClient.add(oo);
 		
 	}
 	
@@ -95,11 +111,11 @@ public class Server {
 		
 		log.println(msg, ping);
 		
-		Iterator<ConnectedClient> it = bw.iterator();
+		Iterator<ClientData> it = connectedClient.iterator();
 		
 		while(it.hasNext()) {
 			
-			ConnectedClient co = it.next();
+			ClientData co = it.next();
 			
 			try {
 				
@@ -124,11 +140,11 @@ public class Server {
 		
 		this.sa.kill();
 		
-		Iterator<ConnectedClient> it = bw.iterator();
+		Iterator<ClientData> it = connectedClient.iterator();
 		
 		while(it.hasNext()) {
 			
-			ConnectedClient co = it.next();
+			ClientData co = it.next();
 			
 			try {
 				
