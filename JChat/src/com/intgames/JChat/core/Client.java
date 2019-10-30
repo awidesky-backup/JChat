@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import com.intgames.JChat.GUI.ErrorGUI;
+import com.intgames.JChat.GUI.ErrorProvider;
 
 public class Client {
 
 	private Socket sock;
 	
-	public ErrorGUI mg;
+	public ErrorProvider mg;
 	
 	public Client() {
 		

@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.intgames.JChat.Exception.BannedClientException;
-import com.intgames.JChat.GUI.ErrorGUI;
+import com.intgames.JChat.GUI.ErrorProvider;
 import com.intgames.JChat.GUI.ServerGUI;
 import com.intgames.JChat.resources.Log;
 import com.intgames.JChat.resources.LogAppender;
@@ -36,12 +36,12 @@ public class Server {
 	private Log log;
 	private ServerGUI sg;
 	
-	public ErrorGUI mg;
+	public ErrorProvider mg;
 	
 	public Server(String servername, String path, ServerGUI sg, int port) {
 		
 		this.servername = servername;
-		this.mg = new ErrorGUI(this.log); 
+		this.mg = new ErrorProvider(this.log); 
 		this.log = new Log(servername, path, mg, new LogAppender());
 		this.sg = sg;
 		

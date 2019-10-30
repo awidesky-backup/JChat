@@ -7,7 +7,7 @@ import com.intgames.JChat.resources.Log;
 import com.intgames.JChat.resources.Message;
 
 @SuppressWarnings("serial")
-public class ErrorGUI extends JFrame {
+public class ErrorProvider extends JFrame {
 
 	/**
 	 * @author Eugene Hong
@@ -18,7 +18,7 @@ public class ErrorGUI extends JFrame {
 	
 	private Log log;
 	
-	public ErrorGUI(Log log) {
+	public ErrorProvider(Log log) {
 		// TODO Auto-generated constructor stub
 		this.log = log;
 		

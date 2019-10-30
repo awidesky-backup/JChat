@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.intgames.JChat.Exception.BannedClientException;
-import com.intgames.JChat.GUI.ErrorGUI;
+import com.intgames.JChat.GUI.ErrorProvider;
 import com.intgames.JChat.core.ClientData;
 import com.intgames.JChat.core.Server;
 import com.intgames.JChat.resources.MessageOutputStream;
@@ -21,7 +21,7 @@ public class ServerAccepterThread extends Thread {
 	private MessageOutputStream mo;
 	private ObjectInputStream oi;
 	private Server svr;
-	private ErrorGUI mg;
+	private ErrorProvider mg;
 	private List<MessageGetterThread> msggetter = new LinkedList<>();
 	private boolean isrunning;
 	

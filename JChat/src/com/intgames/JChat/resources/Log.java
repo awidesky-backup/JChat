@@ -9,7 +9,7 @@ import java.util.Calendar;
 
 import javax.swing.JTextArea;
 
-import com.intgames.JChat.GUI.ErrorGUI;
+import com.intgames.JChat.GUI.ErrorProvider;
 import com.intgames.JChat.core.Client;
 import com.intgames.JChat.core.Server;
 
@@ -22,7 +22,7 @@ public class Log {
 	private BufferedWriter br;
 	
 	private LogAppender lp;
-	private ErrorGUI mg;
+	private ErrorProvider mg;
 	private SimpleDateFormat filef = new SimpleDateFormat("yyyy_MM_dd_HH_mm");
 	private SimpleDateFormat dayf = new SimpleDateFormat("dd");
 	private SimpleDateFormat timeinlogf = new SimpleDateFormat("[a hh:mm] ");
@@ -30,7 +30,7 @@ public class Log {
 	private String today;
 	
 
-	public Log(String name, String logpath, ErrorGUI mg, LogAppender lp) {
+	public Log(String name, String logpath, ErrorProvider mg, LogAppender lp) {
 		// TODO Auto-generated constructor stub
 		
 		today = dayf.format(System.currentTimeMillis());
